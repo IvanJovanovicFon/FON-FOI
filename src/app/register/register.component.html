@@ -1,0 +1,121 @@
+<app-navbar></app-navbar>
+<section class="register-block">
+  <div class="container">
+     <div class="row ">
+        <div class="col register-sec">
+           <h2 class="text-center">Registration</h2>
+           <form
+            class="register-form"
+            action=""
+            #f="ngForm"
+            novalidate
+            (ngSubmit)="f.form.valid&&onSubmit()"
+            >
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-uppercase">Name</label>
+
+              <input type="text" class="form-control" name="name"  id="" [(ngModel)]="formdata.name" #name="ngModel" required   >
+              <span class="text-danger" *ngIf="this.submit&&name.errors?.['required']" >
+                  Name is required.
+              </span>
+           </div>
+           <div class="form-group">
+            <label for="exampleInputEmail1" class="text-uppercase">Surname</label>
+
+            <input type="text" class="form-control" name="surname"  id="" [(ngModel)]="formdata.name" #name="ngModel" required   >
+            <span class="text-danger" *ngIf="this.submit&&name.errors?.['required']" >
+                Surname is required.
+            </span>
+         </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-uppercase">Email</label>
+
+              <input type="text"  class="form-control" name="email" id="" [(ngModel)]="formdata.email" #email="ngModel" required  >
+              <span class="text-danger"  *ngIf="this.submit&&email.errors?.['required']">
+                  Email is required.
+              </span>
+           </div>
+           <div class="form-group">
+               <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+               <input type="text" class="form-control" name="username" id="" [(ngModel)]="formdata.username" #username="ngModel" required pattern="^[a-zA-Z0-9_]+$">
+               <span class="text-danger" *ngIf="this.submit && username.errors?.['required']">
+                Username is required.
+           </span>
+          <span class="text-danger" *ngIf="this.submit && username.errors?.['pattern']">
+               Only alphanumeric characters and underscore (_) are allowed for username.
+   </span>
+         </div>
+           <div class="form-group">
+              <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+              <input  class="form-control" type="password"  name="password" id="" [(ngModel)]="formdata.password" #password="ngModel" required minlength="8" >
+              <span class="text-danger"  *ngIf="this.submit&&password.errors?.['required']">
+                  Password is required.
+              </span>
+              <span class="text-danger"  *ngIf="this.submit&&password.errors?.['minlength']">
+                Minimum length of password is 8 characters
+            </span>
+           </div>
+           <div class="form-group">
+            <label for="exampleInputEmail1" class="text-uppercase">Date of Birth</label>
+            <input type="date" class="form-control" name="birthdate" id="" [(ngModel)]="formdata.birthdate" #birthdate="ngModel" required>
+            <span class="text-danger" *ngIf="this.submit && birthdate.errors?.['required']">
+              Date of Birth is required.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="primaryGenre">Primary Genre:</label>
+            <select class="form-control" id="primaryGenre" name="primaryGenre" [(ngModel)]="formdata.primaryGenre">
+              <option value="Action">Action</option>
+              <option value="Drama">Drama</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Romance">Romance</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Horror">Horror</option>
+              <option value="Western">Western</option>
+              <option value="Adventure">Adventure</option>
+            </select>
+          </div> 
+          <div class="form-group">
+            <label>Secondary Genres:</label>
+            <div *ngFor="let genre of getFilteredSecondaryGenres()">
+              <input type="checkbox" id="{{genre}}" name="secondaryGenres" [(ngModel)]="formdata.secondaryGenres" [value]="genre">
+              <label for="{{genre}}">{{genre}}</label><br>
+            </div>
+    
+          
+       
+          
+             
+          </div>
+
+           <div class="form-group">
+
+              <span class="text-danger" *ngIf="this.errorMessage" >
+                 <p [innerText]="this.errorMessage"></p>
+              </span>
+              <div  class="text-center" *ngIf="this.loading">
+                <div class="spinner-border text-primary " role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+
+              <input type="submit" class="btn btn-login float-right"  value="Register" (click)="submit=true" [disabled]="this.loading"  >
+           </div>
+           <div class="clearfix"></div>
+           <div class="form-group">
+              Already have account ? Please <a href="javascript:void(0);" routerLink="/login">Login</a>
+           </div>
+
+
+           </form>
+
+
+        </div>
+
+     </div>
+
+
+  </div>
+</section>
