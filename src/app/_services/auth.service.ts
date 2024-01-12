@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -29,27 +30,45 @@ export class AuthService {
     }
   }
 
-  register(name:string,email:string,password:string){
-      //send data to register api (firebase)
-     return this.http
-      .post<{idToken:string}>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
-          {displayName:name,email,password}
-      );
-  }
+  // register(name:string,email:string,password:string){
+  //     //send data to register api (firebase)
+  //    return this.http
+  //     .post<{idToken:string}>(
+  //       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
+  //         {displayName:name,email,password}
+  //     );
+  // }
+
+  register(user:User){// da li koristimo ovaj token?
+    console.log(user)
+   return this.http
+    .post<{idToken:string}>(
+      'http://localhost:8080/api/v1/users/register',
+        {user}
+    );
+}
 
   storeToken(token:string){
       sessionStorage.setItem('token',token);
   }
 
-  login(email:string,password:string){
-    //send data to login api (firebase)
+  // login(email:string,password:string){
+  //   //send data to login api (firebase)
+  //     return this.http
+  //     .post<{idToken:string}>(
+  //         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]',
+  //           {email,password}
+  //     );
+  // }
+
+    login(email:string,password:string){
       return this.http
       .post<{idToken:string}>(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]',
+          'http://localhost:8080/api/v1/users/login',
             {email,password}
       );
   }
+
 
   detail(){
     let token = sessionStorage.getItem('token');

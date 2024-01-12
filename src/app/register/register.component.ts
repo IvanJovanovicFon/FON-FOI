@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { Genre } from '../model/genre';
+import { GenreServiceService } from '../_services/genre-service.service';
+import { User } from '../model/user';
 
 
 @Component({
@@ -9,15 +12,16 @@ import { AuthService } from '../_services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate:"", primaryGenre:"", secondaryGenres:[] };
+  selectedGenres: string[] = [];
+  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate: new Date(), primaryGenre: new Genre("1", "Default"), selectedGenres:[]};
   submit=false;
   errorMessage="";
   loading=false;
-  secondaryGenres: string[] = ['Action', 'Drama', 'Comedy', 'Horror', 'Adventure', 'Thriller', 'Fantasy', 'Western', 'Romance' ]; 
-  constructor(private auth:AuthService) { }
-  getFilteredSecondaryGenres(): string[] {
-    // Filtrirajte sekundarne žanrove na temelju odabranog primarnog žanra
-    return this.secondaryGenres.filter(genre => genre !== this.formdata.primaryGenre);
+  //secondaryGenres: string[] = ['Action', 'Drama', 'Comedy', 'Horror', 'Adventure', 'Thriller', 'Fantasy', 'Western', 'Romance' ];
+  secondaryGenres:Genre[] = this.genreService.getAllGenres();
+  constructor(private auth:AuthService, private genreService: GenreServiceService ) { }
+  getFilteredSecondaryGenres(): Genre[] {
+    return this.secondaryGenres.filter(genre => genre.name !== this.formdata.primaryGenre.name);
   }
 
   ngOnInit(): void {
@@ -27,18 +31,12 @@ export class RegisterComponent implements OnInit {
   onSubmit(){
 
       this.loading=true;
-
-      //call register service
+      console.log(this.formdata)
+      const user = new User(this.formdata.name, this.formdata.surname, this.formdata.email, 
+        this.formdata.username, this.formdata.password, this.formdata.birthdate, this.formdata.selectedGenres,[],[],[],[])
       this.auth
-      .register(this.formdata.name,this.formdata.email,this.formdata.password)
+      .register(user)
       .subscribe({
-          next:data=>{
-              //store token from response data
-              this.auth.storeToken(data.idToken);
-              console.log('Registered idtoken is '+data.idToken);
-              this.auth.canAuthenticate();
-
-          },
           error:data=>{
               if (data.error.error.message=="INVALID_EMAIL") {
 

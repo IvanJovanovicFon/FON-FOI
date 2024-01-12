@@ -22,7 +22,7 @@
            <div class="form-group">
             <label for="exampleInputEmail1" class="text-uppercase">Surname</label>
 
-            <input type="text" class="form-control" name="surname"  id="" [(ngModel)]="formdata.name" #name="ngModel" required   >
+            <input type="text" class="form-control" name="surname"  id="" [(ngModel)]="formdata.surname" #surname="ngModel" required   >
             <span class="text-danger" *ngIf="this.submit&&name.errors?.['required']" >
                 Surname is required.
             </span>
@@ -77,19 +77,20 @@
               <option value="Adventure">Adventure</option>
             </select>
           </div> 
-          <div class="form-group">
-            <label>Secondary Genres:</label>
-            <div *ngFor="let genre of getFilteredSecondaryGenres()">
-              <input type="checkbox" id="{{genre}}" name="secondaryGenres" [(ngModel)]="formdata.secondaryGenres" [value]="genre">
-              <label for="{{genre}}">{{genre}}</label><br>
-            </div>
-    
-          
-       
-          
-             
-          </div>
 
+<div class="form-group">
+    <label>Secondary Genres:</label>
+    <div *ngFor="let genre of getFilteredSecondaryGenres()">
+        <input type="checkbox" [id]="genre.name" name="secondaryGenres" [(ngModel)]="formdata.selectedGenres" [checked]="formdata.selectedGenres" [value]="genre">
+        <label [attr.for]="genre.name">{{genre.name}}</label><br>
+    </div>
+</div>
+
+        
+
+        
+
+        
            <div class="form-group">
 
               <span class="text-danger" *ngIf="this.errorMessage" >
