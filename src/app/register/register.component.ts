@@ -13,16 +13,13 @@ import { User } from '../model/user';
 export class RegisterComponent implements OnInit {
 
   selectedGenres: string[] = [];
-  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate: new Date(), primaryGenre: new Genre("1", "Default"), selectedGenres:[]};
+  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate: new Date(), selectedGenres:[]};
   submit=false;
   errorMessage="";
   loading=false;
   //secondaryGenres: string[] = ['Action', 'Drama', 'Comedy', 'Horror', 'Adventure', 'Thriller', 'Fantasy', 'Western', 'Romance' ];
   secondaryGenres:Genre[] = this.genreService.getAllGenres();
-  constructor(private auth:AuthService, private genreService: GenreServiceService ) { }
-  getFilteredSecondaryGenres(): Genre[] {
-    return this.secondaryGenres.filter(genre => genre.name !== this.formdata.primaryGenre.name);
-  }
+  constructor(private auth:AuthService, private genreService: GenreServiceService) { }
 
   ngOnInit(): void {
     this.auth.canAuthenticate();
@@ -35,7 +32,8 @@ export class RegisterComponent implements OnInit {
       const user = new User(this.formdata.name, this.formdata.surname, this.formdata.email, 
         this.formdata.username, this.formdata.password, this.formdata.birthdate, this.formdata.selectedGenres,[],[],[],[])
       this.auth
-      .register(user)
+      .register(this.formdata.name, this.formdata.surname, this.formdata.email, 
+        this.formdata.username, this.formdata.password, this.formdata.birthdate, this.formdata.selectedGenres,[],[],[],[])
       .subscribe({
           error:data=>{
               if (data.error.error.message=="INVALID_EMAIL") {

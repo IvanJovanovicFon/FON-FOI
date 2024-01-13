@@ -63,31 +63,21 @@
             </span>
           </div>
 
+
           <div class="form-group">
-            <label for="primaryGenre">Primary Genre:</label>
-            <select class="form-control" id="primaryGenre" name="primaryGenre" [(ngModel)]="formdata.primaryGenre">
-              <option value="Action">Action</option>
-              <option value="Drama">Drama</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Romance">Romance</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Horror">Horror</option>
-              <option value="Western">Western</option>
-              <option value="Adventure">Adventure</option>
-            </select>
-          </div> 
-
-<div class="form-group">
-    <label>Secondary Genres:</label>
-    <div *ngFor="let genre of getFilteredSecondaryGenres()">
-        <input type="checkbox" [id]="genre.name" name="secondaryGenres" [(ngModel)]="formdata.selectedGenres" [checked]="formdata.selectedGenres" [value]="genre">
-        <label [attr.for]="genre.name">{{genre.name}}</label><br>
-    </div>
-</div>
-
-        
-
+            <label for="genres">Select Genres:</label>
+            <div *ngFor="let genre of secondaryGenres">
+              <label>
+                <!-- <input
+                  type="checkbox"
+                  name="genres"
+                  [(ngModel)]="formdata.selectedGenres"
+                  [value]="genre.name"
+                /> -->
+                {{ genre.name }}
+              </label>
+            </div>
+          </div>
         
 
         
@@ -119,4 +109,6 @@
 
 
   </div>
-</section>
+</section> 
+
+

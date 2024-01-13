@@ -39,12 +39,15 @@ export class AuthService {
   //     );
   // }
 
-  register(user:User){// da li koristimo ovaj token?
-    console.log(user)
+  register(first_name: string, last_name: string, email:string, username:string, password:string, date_of_birth: Date,
+    preferences: string[], history: string[], watchlist: string[], reiewed_movies: string[], favorite_actors: string[]){// da li koristimo ovaj token?
+    console.log(first_name, last_name, email, username, password, date_of_birth,preferences,
+      history, watchlist, reiewed_movies, favorite_actors)
    return this.http
     .post<{idToken:string}>(
       'http://localhost:8080/api/v1/users/register',
-        {user}
+        {first_name, last_name, email, username, password, date_of_birth,preferences,
+          history, watchlist, reiewed_movies, favorite_actors}
     );
 }
 
