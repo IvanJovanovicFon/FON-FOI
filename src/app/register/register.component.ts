@@ -17,12 +17,19 @@ export class RegisterComponent implements OnInit {
   submit=false;
   errorMessage="";
   loading=false;
-  //secondaryGenres: string[] = ['Action', 'Drama', 'Comedy', 'Horror', 'Adventure', 'Thriller', 'Fantasy', 'Western', 'Romance' ];
-  secondaryGenres:Genre[] = this.genreService.getAllGenres();
+  secondaryGenres: Genre[] =[]
   constructor(private auth:AuthService, private genreService: GenreServiceService) { }
 
   ngOnInit(): void {
     this.auth.canAuthenticate();
+    this.genreService.getAllGenres().subscribe(
+      (genres: Genre[]) => {
+        this.secondaryGenres = genres;
+      },
+      (error) => {
+        console.error('Error fetching genres', error);
+      }
+    );
   }
 
   onSubmit(){
