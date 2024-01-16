@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<section class="login-block">
+<!-- <section class="login-block">
   <div class="container">
       <div class="row ">
           <div class="col login-sec">
@@ -38,4 +38,24 @@
           </div>
       </div>
   </div>
-</section>
+</section> -->
+
+
+  <form [formGroup]="form">
+      <fieldset>
+          <legend>Login</legend>
+          <div class="form-field">
+              <label>Email:</label>
+              <input name="email" formControlName="email">
+          </div>
+          <div class="form-field">
+              <label>Password:</label>
+              <input name="password" formControlName="password" 
+                     type="password">
+          </div>
+      </fieldset>
+      <div class="form-buttons">
+          <button class="button button-primary" 
+                  (click)="login()">Login</button>
+      </div>
+  </form>`

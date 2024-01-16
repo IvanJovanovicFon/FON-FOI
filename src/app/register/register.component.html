@@ -6,6 +6,7 @@
            <h2 class="text-center">Registration</h2>
            <form
             class="register-form"
+            form
             action=""
             #f="ngForm"
             novalidate
@@ -64,20 +65,18 @@
           </div>
 
 
-          <div class="form-group">
-            <label for="genres">Select Genres:</label>
-            <div *ngFor="let genre of secondaryGenres">
-              <label>
-                <!-- <input
-                  type="checkbox"
-                  name="genres"
-                  [(ngModel)]="formdata.selectedGenres"
-                  [value]="genre.name"
-                /> -->
-                {{ genre.name }}
-              </label>
+
+          <section [formGroup]="preferences" class="form-group">
+            <h4>Select your toppings:</h4>
+            <div *ngFor="let control of preferences.controls | keyvalue">
+              <p>
+                <mat-checkbox formControlName="{{control.key}}" (change)="ifChecked(control.key)">{{ control.key }}</mat-checkbox>
+              </p>
             </div>
-          </div>
+          </section>
+          
+
+
         
 
         

@@ -8,8 +8,11 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { JwtInterceptor } from './_services/jwtInterceptor';
+
 
 const routes:Routes = [
   {path:'',component:HomeComponent },
@@ -31,9 +34,15 @@ const routes:Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

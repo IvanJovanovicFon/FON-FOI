@@ -3,6 +3,9 @@ import { AuthService } from '../_services/auth.service';
 import { Genre } from '../model/genre';
 import { GenreServiceService } from '../_services/genre-service.service';
 import { User } from '../model/user';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 
 
 @Component({
@@ -13,53 +16,69 @@ import { User } from '../model/user';
 export class RegisterComponent implements OnInit {
 
   selectedGenres: string[] = [];
-  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate: new Date(), selectedGenres:[]};
+  selectedGenId: string[]=[];
+  formdata = {name:"",surname:"",email:"", username:"", password:"", birthdate: new Date()};
   submit=false;
   errorMessage="";
   loading=false;
-  secondaryGenres: Genre[] =[]
-  constructor(private auth:AuthService, private genreService: GenreServiceService) { }
+  constructor(private auth:AuthService, private genreService: GenreServiceService, private fb: FormBuilder, private router: Router) { }
+  preferences: FormGroup = new FormGroup({});
+
+  ifChecked(key: string) {
+    const index = this.selectedGenres.indexOf(key);
+    if (index === -1) {
+      this.selectedGenres.push(key);
+    } else {
+      this.selectedGenres.splice(index, 1);
+    }
+  
+    console.log('Updated selectedGenres:', this.selectedGenres);
+    
+  }
+  
 
   ngOnInit(): void {
     this.auth.canAuthenticate();
-    this.genreService.getAllGenres().subscribe(
-      (genres: Genre[]) => {
-        this.secondaryGenres = genres;
-      },
-      (error) => {
-        console.error('Error fetching genres', error);
-      }
-    );
+    this.preferences = this.fb.group({});
+    this.genreService.getAllGenres().subscribe((genres) => {
+ console.log(genres);
+      genres.forEach((genre) => {
+        this.preferences.addControl(genre.name, this.fb.control(false));
+      })
+    },
+    (error) => {
+      console.error('Error fetching genres', error);
+    })
   }
 
   onSubmit(){
 
       this.loading=true;
       console.log(this.formdata)
-      const user = new User(this.formdata.name, this.formdata.surname, this.formdata.email, 
-        this.formdata.username, this.formdata.password, this.formdata.birthdate, this.formdata.selectedGenres,[],[],[],[])
+      this.genreService.getAllGenres().subscribe((genres) => {
+             genres.forEach((genre) => {
+              this.selectedGenres.forEach((g)=>{
+                if(g===genre.name)
+                this.selectedGenId.push(genre.id)
+              })
+             })
+           },
+           (error) => {
+             console.error('Error fetching genres', error);
+           })
       this.auth
       .register(this.formdata.name, this.formdata.surname, this.formdata.email, 
-        this.formdata.username, this.formdata.password, this.formdata.birthdate, this.formdata.selectedGenres,[],[],[],[])
-      .subscribe({
-          error:data=>{
-              if (data.error.error.message=="INVALID_EMAIL") {
-
-                  this.errorMessage = "Invalid Email!";
-
-              } else if (data.error.error.message=="EMAIL_EXISTS") {
-
-                  this.errorMessage = "Already Email exists!";
-
-              }else{
-
-                  this.errorMessage = "Unknown error occured when creating this account!";
-              }
+        this.formdata.username, this.formdata.password, this.formdata.birthdate,this.selectedGenId,[],[],[],[]).subscribe({
+          next: (data) => {
+            this.loading =false;
+            console.log('Register process completed!');
+            this.router.navigate(['/login']); 
+          },
+          error: (error) => {
+            console.log('Greskaaa!', error);
+           this.selectedGenres = [];
+           
           }
-      }).add(()=>{
-          this.loading =false;
-          console.log('Register process completed!');
-      })
-  }
-
+        });
+       }
 }
