@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JwtInterceptor } from './_services/jwtInterceptor';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 const routes:Routes = [
@@ -36,7 +37,8 @@ const routes:Routes = [
     FormsModule,
     HttpClientModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,

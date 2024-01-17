@@ -44,7 +44,7 @@
            </span>
           <span class="text-danger" *ngIf="this.submit && username.errors?.['pattern']">
                Only alphanumeric characters and underscore (_) are allowed for username.
-   </span>
+          </span>
          </div>
            <div class="form-group">
               <label for="exampleInputPassword1" class="text-uppercase">Password</label>
@@ -63,19 +63,52 @@
               Date of Birth is required.
             </span>
           </div>
+          
+          <div class="form-group">
+            <h4>Pick your favorite movie duration:</h4>
+            <mat-radio-group name="Pick your favorite movie duration" [(ngModel)]="formdata.durationUnder2h">
+              <mat-radio-button name="under" [value]="true">Under 120min</mat-radio-button>
+              <mat-radio-button name="above" [value]="false">Above 120min</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          
 
 
-
-          <section [formGroup]="preferences" class="form-group">
-            <h4>Select your toppings:</h4>
+         <!-- <section [formGroup]="preferences" class="form-group">
+            <h4>Select your preferences(min 3):</h4>
             <div *ngFor="let control of preferences.controls | keyvalue">
               <p>
                 <mat-checkbox formControlName="{{control.key}}" (change)="ifChecked(control.key)">{{ control.key }}</mat-checkbox>
               </p>
             </div>
+            <div *ngIf="preferences.hasError('insufficientGenres')">
+              <p class="text-danger">Please select at least three genres.</p>
+            </div>
+          </section> 
+           -->
+
+           <section [formGroup]="preferences" class="form-group">
+            <h4>Select your preferences(min 3):</h4>
+            <div *ngFor="let control of preferences.controls | keyvalue">
+              <p>
+                <mat-checkbox formControlName="{{control.key}}" (change)="ifChecked(control.key)">{{ control.key }}</mat-checkbox>
+              </p>
+            </div>
+            <div *ngIf="preferences.hasError('insufficientGenres')">
+              <p class="text-danger">Please select at least three genres.</p>
+            </div>
           </section>
           
 
+            <section [formGroup]="decades" class="form-group">
+              <h4>Select your favorites decades(min 2):</h4>
+              <div *ngFor="let control of decades.controls | keyvalue">
+                <p>
+                  <mat-checkbox formControlName="{{control.key}}" (change)="ifDecadesChecked(control.key)">{{ control.key }}</mat-checkbox>
+                </p>
+              </div>
+            </section>
+       
 
         
 

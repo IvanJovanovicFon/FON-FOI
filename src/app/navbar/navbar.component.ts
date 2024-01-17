@@ -15,8 +15,8 @@ export class NavbarComponent implements OnInit {
 
   logout(){
       //remove token
-      this.auth.removeToken();
-      this.auth.canAccess();
+      // this.auth.removeToken();
+      // this.auth.canAccess();
   }
 
 }
