@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JwtInterceptor } from './_services/jwtInterceptor';
 import { MatRadioModule } from '@angular/material/radio';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const routes:Routes = [
@@ -38,7 +38,8 @@ const routes:Routes = [
     HttpClientModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    MatRadioModule
+    MatRadioModule,
+    BrowserAnimationsModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,

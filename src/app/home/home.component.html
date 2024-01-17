@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
-<div class="container">
-  <div class="text-center mt-5">
-    <h3>Možda da se ovdje prikazuju aktualni filmovi kad korisnik nije prijavljen</h3>
+
+<div *ngFor="let movie of movies">
+  <div class="movie-card">
+    <h2>{{ movie.title }}</h2>
+    <p><strong>ID:</strong> {{ movie.id }}</p>
+    <p><strong>Date Release:</strong> {{ movie.date_release | date }}</p>
+    <p><strong>Genre:</strong> {{ movie.genre }}</p>
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Actors:</strong> {{ movie.actors.join(', ') }}</p>
+    <p><strong>Description:</strong> {{ movie.description }}</p>
+    <p><strong>Duration:</strong> {{ movie.duration }} minutes</p>
   </div>
 </div>
