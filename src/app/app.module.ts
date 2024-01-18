@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -13,6 +13,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JwtInterceptor } from './_services/jwtInterceptor';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MyModalComponent } from './modal/my-modal/my-modal.component';
+import { AngularMaterialModule } from './modal/angular-material.module';
 
 
 const routes:Routes = [
@@ -29,7 +32,8 @@ const routes:Routes = [
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    MyModalComponent
   ],
   imports: [
     BrowserModule,
@@ -39,13 +43,16 @@ const routes:Routes = [
     MatCheckboxModule,
     ReactiveFormsModule,
     MatRadioModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule, 
+    AngularMaterialModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
-    multi: true
+    multi: true,
+   
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

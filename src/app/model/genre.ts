@@ -6,8 +6,7 @@ export class Genre{
         name: string
     ){
         this.id = id,
-        this.name= name
-        
+        this.name= name   
     }
   }
   

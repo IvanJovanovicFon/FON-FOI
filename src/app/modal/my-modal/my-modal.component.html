@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <h4>Details about movie</h4>
+    <p><strong>ID:</strong> {{ data.id }}</p>
+    <p><strong>Date Release:</strong> {{ data.date_release | date }}</p>
+    <p><strong>Primary genre:</strong> {{ data.genre.primary.name }}</p>
+    <p><strong>Secondary genres:</strong> </p>
+    <div *ngFor="let genre of data.genre.secondary">
+      {{genre.name}}
+    </div>
+    <p><strong>Director:</strong> {{ data.director }}</p>
+    <p><strong>Actors:</strong> {{ data.actors.join(', ') }}</p>
+    <p><strong>Description:</strong> {{ data.description }}</p>
+    <p><strong>Duration:</strong> {{ data.duration }} minutes</p>
+    <img src="{{ data.url }}" alt="Movie Image" class="movie-image"> 
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.date_release" cdkFocusInitial>Ok</button>
+</div>

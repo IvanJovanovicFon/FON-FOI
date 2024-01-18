@@ -8,7 +8,8 @@ export class Movie{
     director: string;
     actors: string[];
     description: string;
-    duration: BigInteger;
+    duration: number;
+    url: string;
 
     constructor( 
         id: string,
@@ -18,7 +19,8 @@ export class Movie{
         director: string,
         actors: string[],
         description: string,
-        duration: BigInteger
+        duration: number,
+        url: string
     ){
         this.id = id,
         this.title= name,
@@ -27,7 +29,8 @@ export class Movie{
         this.director = director ,
         this.actors = actors,
         this.description = description,
-        this.duration = duration
+        this.duration = duration,
+        this.url = url;
     }
   }
   
