@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
-import {shareReplay } from 'rxjs/operators'
+import {map, shareReplay } from 'rxjs/operators'
 
 
 
@@ -20,28 +20,6 @@ export class AuthService {
     return false;
   }
 
-  canAccess(){
-    if (!this.isAuthenticated()) {
-        //redirect to login
-        this.router.navigate(['/login']);
-    }
-  }
-  canAuthenticate(){
-    if (this.isAuthenticated()) {
-      //redirect to dashboard
-      this.router.navigate(['/dashboard']);
-    }
-  }
-
-  // register(name:string,email:string,password:string){
-  //     //send data to register api (firebase)
-  //    return this.http
-  //     .post<{idToken:string}>(
-  //       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
-  //         {displayName:name,email,password}
-  //     );
-  // }
-
   register(first_name: string, last_name: string,password:string, email:string, username:string,
     preferences: string[], date_of_birth: Date, longer_than_2h: boolean, favorite_decades: Int32Array){
     console.log(first_name, last_name,  password, email, username, preferences,date_of_birth,
@@ -54,25 +32,17 @@ export class AuthService {
       'http://localhost:8080/api/v1/users/register',(
         {first_name, last_name, password, email, username,preferences, date_of_birth,
           longer_than_2h, favorite_decades})
-    )
+      )
   
-}
-
-
-  //   login(email:string,password:string){
-  //     return this.http
-  //     .post<any>(
-  //         'http://localhost:8080/api/v1/users/login',
-  //           {email,password}
-  //     );
-  // }
-
-  login(email:string, password:string ) {
-    return this.http.post<{token: string}>('http://localhost:8080/api/v1/users/login', {email, password})
-       // .tap((res: Response) => this.setSession)
-       .pipe(tap((res: any) => this.setSession))
-       .pipe(shareReplay())
       }
+
+
+  // login(email:string, password:string ) {
+  //   return this.http.post<{token: string}>('http://localhost:8080/api/v1/users/login', {email, password})
+  //      // .tap((res: Response) => this.setSession)
+  //      .pipe(tap((res: any) => this.setSession))
+  //      .pipe(shareReplay())
+  //     }
 
       private setSession(authResult: any) {
        // const expiresAt = moment().add(authResult.expiresIn,'second');
@@ -80,39 +50,32 @@ export class AuthService {
         localStorage.setItem('id_token', authResult.idToken);
        // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
       }        
-      logout() {
-        localStorage.removeItem("id_token");
-       // localStorage.removeItem("expires_at");
-      }
-
-      // public isLoggedIn() {
-      //   return moment().isBefore(this.getExpiration());
-      // }
-
-      // isLoggedOut() {
-      //   return !this.isLoggedIn();
-      // }
-
-      // getExpiration() {
-      //   const expiration = localStorage.getItem("expires_at");
-      //   const expiresAt = JSON.parse(expiration);
-      //   return moment(expiresAt);
-      // }    
 
 
-  // detail(){
-  //   let token = sessionStorage.getItem('token');
+      login(username: string, password:string){
+        return this.http.post<any>('http://localhost:8080/api/v1/users/login', {username,password})
+        .pipe(
+            map(user => {
+                // login successful if the response has jwt token/hmm
+                if(user && user.token){
+                    // store user details and jwt token in the local storage to keep the user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    console.log( JSON.stringify(user))
+                }
 
-  //   return this.http.post<{users:Array<{localId:string,displayName:string}>}>(
-  //       'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=[API_KEY]',
-  //       {idToken:token}
-  //   );
-  // }
+                return user;
+            })
+        );
+    }
 
-  // removeToken(){
-  //   sessionStorage.removeItem('token');
-  // }
 
+
+    // logout
+    logout(){
+        // remove user from local storage
+        localStorage.removeItem('currentUser');
+        console.log('logout')
+    }
 
 
 }

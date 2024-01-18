@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMovies();
+    console.log(localStorage.getItem('currentUser'))
   }
 
   openDialog(movie: Movie): void {
