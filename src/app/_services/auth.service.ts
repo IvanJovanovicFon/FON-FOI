@@ -42,16 +42,18 @@ export class AuthService {
   //     );
   // }
 
-  register(first_name: string, last_name: string, email:string, username:string, password:string, date_of_birth: Date,
-    preferences: string[], history: string[], watchlist: string[], reiewed_movies: string[], favorite_actors: string[]){
-    console.log(first_name, last_name, email, username, password, date_of_birth,preferences,
-      history, watchlist, reiewed_movies, favorite_actors)
+  register(first_name: string, last_name: string,password:string, email:string, username:string,
+    preferences: string[], date_of_birth: Date, longer_than_2h: boolean, favorite_decades: Int32Array){
+    console.log(first_name, last_name,  password, email, username, preferences,date_of_birth,
+   longer_than_2h, favorite_decades)
+
+      
 
    return this.http
     .post<any>(
       'http://localhost:8080/api/v1/users/register',(
-        {first_name, last_name, email, username, password, date_of_birth,preferences,
-          history, watchlist, reiewed_movies, favorite_actors})
+        {first_name, last_name, password, email, username,preferences, date_of_birth,
+          longer_than_2h, favorite_decades})
     )
   
 }

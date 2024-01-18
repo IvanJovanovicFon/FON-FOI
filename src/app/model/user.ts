@@ -8,27 +8,18 @@ export class User {
     password: string;
     date_of_birth: Date; 
     preferences: string[];
-    history: string[];
-    watchlist:string[];
-    reiewed_movies:string[];
-    favorite_actors: string[];
-
-    // primaryGenre: string ;
-    // secondaryGenres: string[];
+    longer_than_2h : boolean;
+    favorite_decades:Int32Array
 
     constructor( name: string,
         surname: string,
+        password: string,
         email: string,
         username: string,
-        password: string,
-        date_of_birth: Date,
         preferences: string[],
-        history: string[],
-    watchlist:string[],
-    reiewed_movies:string[],
-    favorite_actors: string[]
-        // primaryGenre: string,
-        // secondaryGenres: string[]
+        date_of_birth: Date,
+        longer_than_2h: boolean,
+        favorite_decades: Int32Array
     ){
         this.first_name= name,
         this.last_name = surname,
@@ -37,12 +28,8 @@ export class User {
         this.password = password,
         this.date_of_birth =  date_of_birth,
         this.preferences = preferences,
-        this.history=history,
-        this.watchlist = watchlist,
-        this.reiewed_movies = reiewed_movies,
-        this.favorite_actors =favorite_actors
-        // this.primaryGenre =  primaryGenre,
-        // this.secondaryGenres =  secondaryGenres
+        this.longer_than_2h = longer_than_2h,
+        this.favorite_decades = favorite_decades
     }
   }
   

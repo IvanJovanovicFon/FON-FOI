@@ -74,24 +74,16 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  // validateGenres(formGroup: FormGroup) {
-  //   const selectedGenress = Object.values(formGroup.value).filter(Boolean);
+  extractDecadeFromArray(inputArray: string[]): Int32Array  {
+    const resultArray = inputArray.map((input) => {
+        const match = input.match(/\d+/);
+        return match ? parseInt(match[0], 10) : null;
+    });
 
-  //   if (selectedGenress.length < 3) {
-  //     formGroup.setErrors({ insufficientGenres: true });
-  //   } else {
-  //     formGroup.setErrors(null);
-  //   }
-  // }
+    const filteredArray = resultArray.filter((value) => value !== null) as number[];
+    return filteredArray.length > 0 ? new Int32Array(filteredArray) : new Int32Array();
+}
 
-  extractDecadeFromString(input: string): number | null {
-    const match = input.match(/\d+/); 
-    if (match) {
-      return parseInt(match[0], 10); 
-    } else {
-      return null;
-    }
-  }
 
   validateGenres(minimumGenres: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -116,8 +108,8 @@ export class RegisterComponent implements OnInit {
              console.error('Error fetching genres', error);
            })
       this.auth
-      .register(this.formdata.name, this.formdata.surname, this.formdata.email, //ovde da se doodaju i zanrovi
-        this.formdata.username, this.formdata.password, this.formdata.birthdate,this.selectedGenId,[],[],[],[]).subscribe({
+      .register(this.formdata.name, this.formdata.surname, this.formdata.password, this.formdata.email, 
+        this.formdata.username, this.selectedGenId, this.formdata.birthdate, !this.formdata.durationUnder2h ,this.extractDecadeFromArray(this.selectedDecades)).subscribe({
           next: (data) => {
             this.loading =false;
             console.log('Register process completed!');
