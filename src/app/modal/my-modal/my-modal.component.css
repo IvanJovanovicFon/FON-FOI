@@ -1,0 +1,44 @@
+/* Add this to your styles.css or styles.scss file */
+
+/* Dialog Container */
+.mat-dialog-container {
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* Dialog Title */
+  .mat-dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Dialog Content */
+  .mat-dialog-content {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Movie Image */
+  .movie-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  /* Dialog Actions */
+  .mat-dialog-actions {
+    justify-content: flex-end;
+  }
+  
+  /* Ok Button */
+  .mat-dialog-actions button {
+    background-color: #2196F3;
+    color: #fff;
+  }
+  
+  /* Hover effect on the Ok button */
+  .mat-dialog-actions button:hover {
+    background-color: #1565C0;
+  }
+  

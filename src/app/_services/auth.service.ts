@@ -21,12 +21,12 @@ export class AuthService {
   }
 
   register(first_name: string, last_name: string,password:string, email:string, username:string,
-    preferences: string[], date_of_birth: Date, longer_than_2h: boolean, favorite_decades: Int32Array){
+    preferences: string[], date_of_birth: string, longer_than_2h: boolean, favorite_decades: number[]){
     console.log(first_name, last_name,  password, email, username, preferences,date_of_birth,
    longer_than_2h, favorite_decades)
 
       
-
+  console.log("UAuth");
    return this.http
     .post<any>(
       'http://localhost:8080/api/v1/users/register',(
@@ -52,8 +52,8 @@ export class AuthService {
       }        
 
 
-      login(username: string, password:string){
-        return this.http.post<any>('http://localhost:8080/api/v1/users/login', {username,password})
+      login(email: string, password:string){
+        return this.http.post<any>('http://localhost:8080/api/v1/users/login', {email,password})
         .pipe(
             map(user => {
                 // login successful if the response has jwt token/hmm
@@ -61,6 +61,7 @@ export class AuthService {
                     // store user details and jwt token in the local storage to keep the user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     console.log( JSON.stringify(user))
+                    console.log("user:", user)
                 }
 
                 return user;

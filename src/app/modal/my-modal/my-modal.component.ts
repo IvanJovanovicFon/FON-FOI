@@ -16,5 +16,6 @@ export class MyModalComponent implements OnInit {
     public dialogRef: MatDialogRef<MyModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Movie
   ) {}
-  ngOnInit() {}
+  ngOnInit() {console.log(this.data.actors)
+  }
 }

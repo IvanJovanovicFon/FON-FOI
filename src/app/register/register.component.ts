@@ -38,6 +38,12 @@ export class RegisterComponent implements OnInit {
     }
     console.log('Updated selectedGenres:', this.selectedGenres);  
   }
+   formatDate(date: Date): string {
+    const day = date.toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
 
   ifDecadesChecked(key: string) {
     const index = this.selectedDecades.indexOf(key);
@@ -74,15 +80,23 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  extractDecadeFromArray(inputArray: string[]): Int32Array  {
+  extractDecadeFromArray(inputArray: string[]): number[] {
     const resultArray = inputArray.map((input) => {
-        const match = input.match(/\d+/);
-        return match ? parseInt(match[0], 10) : null;
+      const match = input.match(/\d+/);
+      return match ? parseInt(match[0], 10) : null;
     });
-
+  
     const filteredArray = resultArray.filter((value) => value !== null) as number[];
-    return filteredArray.length > 0 ? new Int32Array(filteredArray) : new Int32Array();
-}
+  
+    // Return the filteredArray directly if it's not empty
+    if (filteredArray.length > 0) {
+      return filteredArray;
+    } else {
+      // Return an empty array if there are no valid numbers
+      return [];
+    }
+  }
+  
 
 
   validateGenres(minimumGenres: number): ValidatorFn {
@@ -99,27 +113,33 @@ export class RegisterComponent implements OnInit {
       this.genreService.getAllGenres().subscribe((genres) => {
              genres.forEach((genre) => {
               this.selectedGenres.forEach((g)=>{
-                if(g===genre.name)
-                this.selectedGenId.push(genre.id)
+                if(g===genre.name){
+                  console.log(genre.id);
+                  
+                this.selectedGenId.push(genre.id);
+                console.log("Prije autha");
+                this.auth
+                .register(this.formdata.name, this.formdata.surname, this.formdata.password, this.formdata.email, 
+                  this.formdata.username, this.selectedGenId, this.formdata.birthdate.toString(), !this.formdata.durationUnder2h ,this.extractDecadeFromArray(this.selectedDecades)).subscribe({
+                    next: (data) => {
+                      this.loading =false;
+                      console.log('Register process completed!');
+                      this.router.navigate(['/login']); 
+                    },
+                    error: (error) => {
+                      console.log('Greskaaa!', error);
+                      this.selectedGenres = [];
+                      
+                    }
+                  });
+                }
+                
+                
               })
              })
            },
            (error) => {
              console.error('Error fetching genres', error);
            })
-      this.auth
-      .register(this.formdata.name, this.formdata.surname, this.formdata.password, this.formdata.email, 
-        this.formdata.username, this.selectedGenId, this.formdata.birthdate, !this.formdata.durationUnder2h ,this.extractDecadeFromArray(this.selectedDecades)).subscribe({
-          next: (data) => {
-            this.loading =false;
-            console.log('Register process completed!');
-            this.router.navigate(['/login']); 
-          },
-          error: (error) => {
-            console.log('Greskaaa!', error);
-           this.selectedGenres = [];
-           
-          }
-        });
        }
 }

@@ -1,9 +1,12 @@
 <app-navbar></app-navbar>
 
-<div *ngFor="let movie of movies">
-  <div class="movie-card" (click)="openDialog(movie)">
-    <h2>{{ movie.title }}</h2>
-    <img src="{{ movie.url }}" alt="Movie Image" class="movie-image"> 
+<div class="user">
+  <h2>For you, Tin</h2>
+</div>
 
+<div class="movie-container">
+  <div *ngFor="let movie of movies" class="movie-card" (click)="getDetails(movie)">
+    <h2>{{ movie.title }}</h2>
+    <img src="{{ movie.url }}" alt="Movie Image" class="movie-image">
   </div>
 </div>

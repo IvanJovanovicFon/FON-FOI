@@ -40,5 +40,17 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  getDetails(movie: Movie){
+    
+    this.moviesService.getMovieDetails(movie).subscribe(
+      (movieDetails: Movie) => {
+        console.log(movieDetails);
+        this.openDialog(movieDetails);
+      },
+      (error) => {
+        console.error(error);
+      }
+      );
+  }
 }
 
