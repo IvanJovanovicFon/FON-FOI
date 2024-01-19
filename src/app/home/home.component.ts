@@ -3,6 +3,7 @@ import { MoviesService } from '../_services/movies.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MyModalComponent } from '../modal/my-modal/my-modal.component';
 import { Movie } from '../model/movie';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -13,13 +14,26 @@ import { Movie } from '../model/movie';
 export class HomeComponent implements OnInit {
 
   movies: any[] = []; 
-
+  user: string = "";
   constructor(private moviesService: MoviesService, public dialog: MatDialog) { }
 
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwtDecode(token);
+    } catch(Error) {
+      return null;
+    }
+  }
 
   ngOnInit(): void {
     this.loadMovies();
-    console.log(localStorage.getItem('currentUser'))
+    let token = localStorage.getItem('currentUser') 
+    console.log('token: ', token)
+    if(token !== null){
+    console.log("decoded: ", this.getDecodedAccessToken(token))
+    this.user =  this.getDecodedAccessToken(token).firstName;
+    console.log(this.user)
+    }
   }
 
   openDialog(movie: Movie): void {

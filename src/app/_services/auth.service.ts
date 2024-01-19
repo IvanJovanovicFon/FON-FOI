@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import {map, shareReplay } from 'rxjs/operators'
-
+import {jwtDecode} from 'jwt-decode';
 
 
 @Injectable({
@@ -34,34 +34,22 @@ export class AuthService {
           longer_than_2h, favorite_decades})
       )
   
-      }
-
-
-  // login(email:string, password:string ) {
-  //   return this.http.post<{token: string}>('http://localhost:8080/api/v1/users/login', {email, password})
-  //      // .tap((res: Response) => this.setSession)
-  //      .pipe(tap((res: any) => this.setSession))
-  //      .pipe(shareReplay())
-  //     }
-
-      private setSession(authResult: any) {
-       // const expiresAt = moment().add(authResult.expiresIn,'second');
-
-        localStorage.setItem('id_token', authResult.idToken);
-       // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-      }        
+      }   
 
 
       login(email: string, password:string){
+        // let user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
+        // localStorage.setItem('currentUser', JSON.stringify(user)); 
+        
         return this.http.post<any>('http://localhost:8080/api/v1/users/login', {email,password})
         .pipe(
             map(user => {
                 // login successful if the response has jwt token/hmm
+              //  user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
                 if(user && user.token){
                     // store user details and jwt token in the local storage to keep the user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(user)); 
                     console.log( JSON.stringify(user))
-                    console.log("user:", user)
                 }
 
                 return user;
@@ -69,11 +57,7 @@ export class AuthService {
         );
     }
 
-
-
-    // logout
     logout(){
-        // remove user from local storage
         localStorage.removeItem('currentUser');
         console.log('logout')
     }
