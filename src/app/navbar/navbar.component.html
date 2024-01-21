@@ -1,17 +1,19 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <li class="nav-item"><a class="nav-link" routerLink="/allMovies">All Movies</a></li>
-  <ul class="navbar-nav mr-auto">
-  </ul>
+  <!-- <ul class="navbar-nav mr-auto">
+    <li class="nav-item"><a class="nav-link" routerLink="/allMovies">All Movies</a></li>
+  </ul> -->
   <ul class="navbar-nav ml-auto">
     <ng-container *ngIf="auth.isAuthenticated(); then authenticated else notAuthenticated"></ng-container>
 
     <ng-template #notAuthenticated>
+      <li class="nav-item"><a class="nav-link" routerLink="/allMovies">All Movies</a></li>
       <li class="nav-item"><a class="nav-link" routerLink="/register">Register</a></li>
       <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
     </ng-template>
 
     <ng-template #authenticated>
       <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/allMovies">All Movies</a></li>
       <li class="nav-item"><a class="nav-link" (click)="logout()">Logout</a></li>
     </ng-template>
   </ul>
