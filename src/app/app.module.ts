@@ -31,7 +31,7 @@ const routes: Routes = [
 
   { path: 'home', component: HomeComponent,
 
-   // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
 
   },
 
@@ -45,7 +45,8 @@ const routes: Routes = [
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    MyModalComponent
+    MyModalComponent,
+    AllMoviesComponent
   ],
   imports: [
     BrowserModule,

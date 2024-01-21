@@ -12,6 +12,10 @@ export class MoviesService {
 
   constructor(private http: HttpClient) { }
 
+  getFilteredMovies(): Observable<Movie[]>{
+      return this.http.get<Movie[]>('http://localhost:8080/api/v1/movies');
+  }
+
   getAllMovies(): Observable<Movie[]> {
       const result: Movie[] = [{
       id: "123",
@@ -41,6 +45,7 @@ export class MoviesService {
     //otkomentarisi ovu liniju
    // return this.http.get<Movie[]>('http://localhost:8080/api/v1/movies/recommendations');
   } 
+
   getMovieDetails(movie:Movie): Observable<Movie>{
     const result: Movie = {
       id: "123",

@@ -1,3 +1,13 @@
-<!-- <app-navbar></app-navbar> -->
-
-<p>all-movies works!</p>
+<!-- all-movies.component.html -->
+<div class="search-container">
+    <input type="text" placeholder="Search movies..." [(ngModel)]="searchText" (input)="filterMovies()" />
+  </div>
+  
+  <div class="movies-container">
+    <div *ngFor="let movie of filteredMovies">
+      <!-- Display movie details here -->
+      <div>{{ movie.title }}</div>
+      <div>{{ movie.genre }}</div>
+      <!-- Add more details as needed -->
+    </div>
+  </div>
