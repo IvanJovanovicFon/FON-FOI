@@ -1,9 +1,114 @@
+/* styles.css or your component's style file */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #e50914;
+}
+
 .search-container {
-    margin: 20px;
-  }
-  
-  .movies-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
+  margin: 20px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+form div {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+input,
+select,
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+input {
+  width: 200px;
+}
+
+select {
+  width: 150px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #e50914;
+}
+
+button:hover {
+  background-color: #ff0a16;
+}
+
+/* Google-like search bar styles */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #e50914;
+}
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.movie-card {
+  width: 250px;
+  margin-bottom: 20px;
+  background-color: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card-title {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.movie-card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-bottom: 1px solid #555;
+}

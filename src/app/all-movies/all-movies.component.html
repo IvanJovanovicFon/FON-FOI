@@ -1,16 +1,26 @@
-<!-- all-movies.component.html -->
-<app-navbar>
-  
-</app-navbar>
-<div class="search-container">
-    <input type="text" placeholder="Search movies..." [(ngModel)]="searchText" (input)="filterMovies()" />
-  </div>
+<app-navbar></app-navbar>
+
+<div>
+  <h2>All Movies</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="searchTerm">Search:</label>
+      <input id="searchTerm" [(ngModel)]="searchTerm" name="searchTerm" />
+    </div>
+    <div>
+      <label for="genre">Genre:</label>
+      <select id="genre" [(ngModel)]="selectedGenre" name="genre">
+        <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+      </select>
+    </div>
+    <button type="submit">Search</button>
+  </form>
+
   
   <div class="movies-container">
-    <div *ngFor="let movie of filteredMovies">
-      <!-- Display movie details here -->
-      <div>{{ movie.title }}</div>
-      <div>{{ movie.genre }}</div>
-      <!-- Add more details as needed -->
+    <div *ngFor="let movie of movies" class="movie-card">
+      <div class="movie-card-title">{{ movie.title }}</div>
+      <img [src]="movie.url" alt="{{ movie.title }}" class="movie-card-image" />
     </div>
   </div>
+</div>

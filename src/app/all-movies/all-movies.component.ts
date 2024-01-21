@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MoviesService } from '../_services/movies.service';
+import { GenreServiceService } from '../_services/genre-service.service';
+import { Genre } from '../model/genre';
 import { Movie } from '../model/movie';
 
 @Component({
@@ -7,30 +9,41 @@ import { Movie } from '../model/movie';
   templateUrl: './all-movies.component.html',
   styleUrls: ['./all-movies.component.css'],
 })
-export class AllMoviesComponent implements OnInit {
-  allMovies: Movie[] = [];
-  filteredMovies: Movie[] = [];
-  searchText: string = '';
+export class AllMoviesComponent {
+  searchTerm: string = '';
+  selectedGenre: string = '';
+  genres: Genre[] = [];
+  movies: Movie[]=[];
 
-  constructor(private moviesService: MoviesService) {}
+  constructor(private movieService: MoviesService, private genreService: GenreServiceService) {}
 
-  ngOnInit(): void {
-    // Fetch all movies from the service
-    this.moviesService.getAllMovies().subscribe(
-      (movies) => {
-        this.allMovies = movies;
-        this.filteredMovies = movies; // Initially, display all movies
+  ngOnInit() {
+      this.genreService.getAllGenres().subscribe(
+      (genres: Genre[]) => {
+        this.genres = genres;
       },
       (error) => {
-        console.error('Error fetching movies:', error);
+        console.error('Error loading genres', error);
       }
     );
+    this.loadMovies();
+    console.log(this.movies)
   }
 
-  filterMovies(): void {
-    // Filter movies based on the search text
-    this.filteredMovies = this.allMovies.filter((movie) =>
-      movie.title.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+  loadMovies(){
+    this.movieService.getMovies().subscribe((m)=>
+    this.movies = m)
+  }
+
+  SearchMovies() {
+    this.movieService.searhMovies(this.searchTerm, this.selectedGenre).subscribe((movies) => {
+      this.movies
+    });
+    console.log('after  search', this.movies)
+  }
+
+  onSubmit() {
+    console.log(this.searchTerm, this.selectedGenre)
+    this.SearchMovies();
   }
 }

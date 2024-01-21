@@ -34,14 +34,14 @@ export class AuthService {
 
 
       login(email: string, password:string){
-        let user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
-        localStorage.setItem('currentUser', JSON.stringify(user)); 
+        // let user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
+        // localStorage.setItem('currentUser', JSON.stringify(user)); 
 
         return this.http.post<any>('http://localhost:8080/api/v1/users/login', {email,password})
         .pipe(
             map(user => {
                 // login successful if the response has jwt token/hmm
-               user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
+             //  user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJUaW4iLCJleHBpcmUiOjE3MDU3NTU5MjksInVzZXJJZCI6IjY1OTU5MjYzM2U5OGZmNjVhMzRlNjZlYyIsImVtYWlsIjoidGluLnNvcGljQGdtYWlsLmNvbSJ9.ocXwvwQBTSnHGpL2JngZ-oG0jiM9qX-8-q561FVKZHU'
                 if(user && user.token){
                     // store user details and jwt token in the local storage to keep the user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user)); 
