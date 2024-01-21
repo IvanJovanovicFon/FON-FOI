@@ -42,3 +42,14 @@
     background-color: #1565C0;
   }
   
+  .movie-card {
+    position: relative;
+  }
+  
+  .watchlist-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+  

@@ -14,9 +14,11 @@ export class AuthService {
   constructor(private router:Router,private http:HttpClient) { }
 
   isAuthenticated():boolean{
-    if (sessionStorage.getItem('token')!==null) {
+    if (sessionStorage.getItem('currentUser')!==null) {
+        console.log('is auth')
         return true;
     }
+    console.log('not auth')
     return false;
   }
 

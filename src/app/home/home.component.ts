@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
   ngOnInit(): void {
     this.loadMovies();
     let token = localStorage.getItem('currentUser') 

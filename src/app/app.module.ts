@@ -5,7 +5,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
@@ -16,14 +15,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MyModalComponent } from './modal/my-modal/my-modal.component';
 import { AngularMaterialModule } from './modal/angular-material.module';
+import { AllMoviesComponent } from './all-movies/all-movies.component';
+import { AuthGuard } from './auth.guard';
 
 
-const routes:Routes = [
-  {path:'',component:HomeComponent },
-  {path:'register',component:RegisterComponent},
-  {path:'login',component:LoginComponent},
-  {path:'dashboard',component:DashboardComponent}
-]
+
+
+const routes: Routes = [
+
+  { path: '', redirectTo: '/allMovies', pathMatch: 'full' },
+
+  { path: 'login', component: LoginComponent },
+
+  { path: 'allMovies', component: AllMoviesComponent },
+
+  { path: 'home', component: HomeComponent,
+
+   // canActivate: [AuthGuard],
+
+  },
+
+];
+
 
 @NgModule({
   declarations: [
@@ -32,7 +45,6 @@ const routes:Routes = [
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent,
     MyModalComponent
   ],
   imports: [

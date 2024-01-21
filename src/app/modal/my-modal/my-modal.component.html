@@ -1,8 +1,12 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<div class="movie-card">
+<h1 mat-dialog-title class="movie-title">{{data.title}}</h1>
 <div mat-dialog-content>
   <h4>Details about movie</h4>
-    <p><strong>ID:</strong> {{ data.id }}</p>
-    <!-- <p><strong>Date Release:</strong> {{ data.date_release | date }}</p>
+  <p><strong>ID:</strong> {{ data.id }}</p>
+  <mat-icon class="watchlist-icon" (click)="toggleWatchlist(data)">
+    {{ isInWatchlist(data) ? 'weekend' : 'add_to_queue' }}
+  </mat-icon>
+  <!-- <p><strong>Date Release:</strong> {{ data.date_release | date }}</p>
     <p><strong>Primary genre:</strong> {{ data.genre.primary.name }}</p>
     <p><strong>Secondary genres:</strong> </p>
     <div *ngFor="let genre of data.genre.secondary">
@@ -17,3 +21,5 @@
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="data.date_release" cdkFocusInitial>Ok</button>
 </div>
+</div>
+
