@@ -17,14 +17,24 @@ export class MyModalComponent implements OnInit {
     private moviesService: MoviesService,
     public dialogRef: MatDialogRef<MyModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Movie
-  ) {}
+  ) { }
 
-  
+  status: boolean = false;
+
   ngOnInit() {
+    console.log("123");
+    this.moviesService.getWatchListStatus(this.data.id)
+      .then((status: boolean) => {
+        console.log(status, "status");
+        this.status = status
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
 
-  watchlist : Movie[] = [];
+
 
   addToWatchlist(movie: Movie): void {
 
@@ -32,38 +42,50 @@ export class MyModalComponent implements OnInit {
     this.moviesService.addToWatchlist(movie).subscribe(
       (response) => {
         console.log('Movie added to watchlist:', response);
-        this.watchlist.push(movie)
+        this.moviesService.getWatchListStatus(this.data.id)
+          .then((status: boolean) => {
+            console.log(status, "status");
+            this.status = status
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            
+          });
       },
       (error) => {
         console.error('Error adding movie to watchlist:', error);
       }
     );
-   }
+  }
 
-   toggleWatchlist(movie: Movie): void {
-    const index = this.watchlist.findIndex((m) => m.id === movie.id);
+  toggleWatchlist(movie: Movie): void {
 
-    if (index !== -1) {
-      this.removeFromWatchlist(index, movie);
+    if (this.status === true) {
+      this.removeFromWatchlist(movie);
     } else {
       this.addToWatchlist(movie);
     }
+
   }
 
-  
-  removeFromWatchlist(index: number, movie: Movie): void {
+  removeFromWatchlist(movie: Movie): void {
     this.moviesService.removeFromWatchlist(movie).subscribe(
       (response) => {
         console.log('Movie removed from watchlist:', response);
-        this.watchlist.splice(index, 1);
+        console.log("123");
+        this.moviesService.getWatchListStatus(this.data.id)
+          .then((status: boolean) => {
+            console.log(status, "status");
+            this.status = status
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            
+          });
       },
-      (error) => {
-        console.error('Error removing movie from watchlist:', error);
-      }
+      //   (error) => {
+      //     console.error('Error removing movie from watchlist:', error);
+      //   }
     );
-  }
-
-  isInWatchlist(movie: Movie): boolean {
-    return this.watchlist.some((m) => m.id === movie.id);
   }
 }

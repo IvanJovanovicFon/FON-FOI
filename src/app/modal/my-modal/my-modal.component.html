@@ -4,8 +4,8 @@
   <h4>Details about movie</h4>
   <p><strong>ID:</strong> {{ data.id }}</p>
   <mat-icon class="watchlist-icon" (click)="toggleWatchlist(data)">
-    {{ isInWatchlist(data) ? 'weekend' : 'add_to_queue' }}
-  </mat-icon>
+    {{ status ? 'weekend' : 'add_to_queue' }}
+  </mat-icon>
   <!-- <p><strong>Date Release:</strong> {{ data.date_release | date }}</p>
     <p><strong>Primary genre:</strong> {{ data.genre.primary.name }}</p>
     <p><strong>Secondary genres:</strong> </p>
