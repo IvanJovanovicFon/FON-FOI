@@ -36,10 +36,11 @@ export class AllMoviesComponent {
   }
 
   SearchMovies() {
+    this.movies=[];
     this.movieService.searhMovies(this.searchTerm, this.selectedGenre).subscribe((movies) => {
-      this.movies
+      this.movies=movies;
+      console.log('after  search', this.movies)
     });
-    console.log('after  search', this.movies)
   }
 
   onSubmit() {

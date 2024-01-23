@@ -94,9 +94,21 @@ export class MoviesService {
   }
 
 searhMovies(title: string, genre: string): Observable<Movie[]> {
-  const url = 'http://localhost:8080/api/v1/movies';
-  return this.http.post<Movie[]>(url, {title, genre});
+  const url = 'http://localhost:8080/api/v1/movies/search';
+  if((title===null||title==='')&&(genre!==null||genre!=='')){
+    return this.http.post<Movie[]>(url, { genre});
+  }
+  if((genre===null||genre==='')&&(title!==null||title!=='')){
+    return this.http.post<Movie[]>(url, {title});
+  }
+
+  return this.http.post<Movie[]>(url, {genre,title});
 }
+getWatchlist():Observable<Movie[]>{
+  const url = 'http://localhost:8080/api/v1/movies/watchlist';
+  return this.http.get<Movie[]>(url);
+}
+
 
 getMovies(): Observable<Movie[]> {
 //   const result: Movie[] = [{
