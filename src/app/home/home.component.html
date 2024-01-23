@@ -10,3 +10,10 @@
     <img src="{{ movie.url }}" alt="Movie Image" class="movie-image">
   </div>
 </div>
+<h1>Your watchlist</h1>
+<div class="movie-container">
+  <div *ngFor="let movie of watchlist" class="movie-card">
+    <h2>{{ movie.title }}</h2>
+    <img src="{{ movie.url }}" alt="Movie Image" class="movie-image">
+  </div>
+</div>

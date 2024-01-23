@@ -14,6 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 export class HomeComponent implements OnInit {
 
   movies: any[] = []; 
+  watchlist: any[] = [];
   user: string = "";
   constructor(private moviesService: MoviesService, public dialog: MatDialog) { }
 
@@ -34,8 +35,15 @@ export class HomeComponent implements OnInit {
     console.log("decoded: ", this.getDecodedAccessToken(token))
     this.user =  this.getDecodedAccessToken(token).firstName;
     console.log(this.user)
+    this.getWatchlist()
     }
   }
+  getWatchlist(){
+    this.moviesService.getWatchlist().subscribe((watch)=>{
+      this.watchlist = watch;
+    })
+  }
+
 
   openDialog(movie: Movie): void {
     this.dialog.open(MyModalComponent, {
