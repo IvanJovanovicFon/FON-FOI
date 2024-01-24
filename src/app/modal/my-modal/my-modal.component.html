@@ -19,7 +19,7 @@
     <img src="{{ data.url }}" alt="Movie Image" class="movie-image"> 
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.date_release" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data.date_release" cdkFocusInitial (click)="closeModal()">Ok</button>
 </div>
 </div>
 

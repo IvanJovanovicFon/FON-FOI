@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MyModalComponent } from '../modal/my-modal/my-modal.component';
 import { Movie } from '../model/movie';
 import { jwtDecode } from 'jwt-decode';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,13 @@ export class HomeComponent implements OnInit {
   movies: any[] = []; 
   watchlist: any[] = [];
   user: string = "";
-  constructor(private moviesService: MoviesService, public dialog: MatDialog) { }
+  refreshSubscription: Subscription;
+
+  constructor(private moviesService: MoviesService, public dialog: MatDialog) {
+    this.refreshSubscription = this.moviesService.refreshMovies$.subscribe(() => {
+      this.refreshMovies();
+    });
+  }
 
   getDecodedAccessToken(token: string): any {
     try {
@@ -24,6 +31,15 @@ export class HomeComponent implements OnInit {
     } catch(Error) {
       return null;
     }
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from the observable to avoid memory leaks
+    this.refreshSubscription.unsubscribe();
+  }
+
+  refreshMovies() {
+    this.getWatchlist();
   }
 
 
@@ -63,8 +79,8 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
   getDetails(movie: Movie){
-    
     this.moviesService.getMovieDetails(movie).subscribe(
       (movieDetails: Movie) => {
         console.log(movieDetails);

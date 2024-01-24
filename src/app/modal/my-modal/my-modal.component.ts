@@ -33,11 +33,12 @@ export class MyModalComponent implements OnInit {
       });
   }
 
-
-
+  closeModal() {
+    // Trigger the movie refresh in the home component
+    this.moviesService.triggerRefreshMovies();
+  }
 
   addToWatchlist(movie: Movie): void {
-
     console.log("moviee: ", movie)
     this.moviesService.addToWatchlist(movie).subscribe(
       (response) => {
@@ -59,7 +60,6 @@ export class MyModalComponent implements OnInit {
   }
 
   toggleWatchlist(movie: Movie): void {
-
     if (this.status === true) {
       this.removeFromWatchlist(movie);
     } else {
