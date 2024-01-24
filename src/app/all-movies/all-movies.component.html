@@ -18,7 +18,7 @@
 
   
   <div class="movies-container">
-    <div *ngFor="let movie of movies" class="movie-card">
+    <div *ngFor="let movie of movies" class="movie-card" (click)="getDetails(movie)">
       <div class="movie-card-title">{{ movie.title }}</div>
       <img [src]="movie.url" alt="{{ movie.title }}" class="movie-card-image" />
     </div>
